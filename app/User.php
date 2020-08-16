@@ -18,7 +18,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'nick', 'email', 'password',
     ];
 
     /**
@@ -29,4 +29,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Add a mutator to ensure hashed passwords.
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = password_hash($password, PASSWORD_DEFAULT);
+    }
 }
